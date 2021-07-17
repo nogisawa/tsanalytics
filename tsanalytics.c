@@ -199,21 +199,25 @@ void tsanalytics(ARGS_TSANALYTICS *params ){
 			TS_TOT tot;
 			st_tot(&tot, packet_list[head.pid].payload);
 
-			// TOTからcurrent_totを更新
-			tmp_tm = tm_to_text(&tot.tm);
-			strcpy( current_tot, tmp_tm);
-			free(tmp_tm);
+			// 有効性確認
+			if(tot.disable == 0){
 
-			// first_totが空だったら代入する・
-			// 日付に0日はないので、それで判定する
-			if( first_tot.tm_mday == 0 ){ first_tot = tot.tm; }
-			// 終了日時は常に書く事で実現する
-			last_tot = tot.tm;
+				// TOTからcurrent_totを更新
+				tmp_tm = tm_to_text(&tot.tm);
+				strcpy( current_tot, tmp_tm);
+				free(tmp_tm);
+	
+				// first_totが空だったら代入する・
+				// 日付に0日はないので、それで判定する
+				if( first_tot.tm_mday == 0 ){ first_tot = tot.tm; }
+				// 終了日時は常に書く事で実現する
+				last_tot = tot.tm;
 
 #if DEBUG
-			printf("TOT: %s\n", current_tot);
+				printf("TOT: %s\n", current_tot);
 #endif
-			free_tot(&tot);
+				free_tot(&tot);
+			}
 
 		}
 

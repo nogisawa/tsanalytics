@@ -142,4 +142,3 @@ char *tm_to_text(struct tm *tm){
         strftime(result, 20, "%Y-%m-%d %H:%M:%S", tm );
 	return(result);
 }
-

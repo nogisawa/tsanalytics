@@ -151,12 +151,19 @@ struct PACKET_LIST {
 // TOT用構造体
 typedef struct TS_TOT TS_TOT;
 struct TS_TOT {
-	uint8_t 	table_id;
+	uint8_t 	table_id;                   // =0x73ならTOTと判断する
+	uint8_t		section_syntax_indicator;   // =0なら有効、=1なら無効と判断する
+	uint16_t	section_length;             // <=1021ならOK、それより大きい物は無効
+
 	unsigned char	JST_time[5]; // plainなJST_time
 	struct tm	tm;          // 最終的にはtm構造体にする
 
 	// 以下は一時的にしか使わないかもしれない
 	uint16_t	MJD;         // MJD
+
+	// ここが=1だったら無効とする
+	uint8_t 	disable;
+
 };
 
 // 範囲指定する時に使える
